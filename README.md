@@ -58,8 +58,9 @@ python main.py
 **Pausa e Continuação do Vídeo**
 Enquanto o vídeo está sendo exibido e analisado, é possível pausá-lo e retomá-lo com as seguintes teclas:
 
-**Tecla P: Pausar/continuar o vídeo.**
-**Tecla Q: Encerrar a execução do programa.**
+**Tecla P: Pausar/continuar o vídeo.**  
+
+**Tecla Q: Encerrar a execução do programa.**  
 Máscaras e Visualizações
 Janela Principal: Exibe o vídeo original com a detecção de movimento.
 Máscara de Movimento: Realça áreas brancas em movimento.
