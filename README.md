@@ -78,7 +78,7 @@ python fire-det-webcam.py
 ```
 
 ## Resultado esperado:
-![Detect-fire-expected](https://drive.google.com/uc?export=view&id=1ENzP5-fv77EsBCkKocTrO4GZvGhGXtVI)
+<img src="https://drive.google.com/uc?export=view&id=1ENzP5-fv77EsBCkKocTrO4GZvGhGXtVI" alt="Detect-fire-expected" width="500">
 
 
 ## 📁 Estrutura do Projeto
