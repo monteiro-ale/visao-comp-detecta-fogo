@@ -1,8 +1,9 @@
 import cv2
 import numpy as np
 
-# Inicialize variáveis globais
-prev_frame = None  # Para armazenar o quadro anterior
+# Variáveis globais
+prev_frame = None  # Quadro anterior
+
 def processa_frame(img):
     """
     Processa o quadro e retorna a máscara de movimento para a cor branca.
@@ -13,7 +14,7 @@ def processa_frame(img):
     gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
 
     # Cria uma máscara onde a cor branca (255) é isolada
-    _, white_mask = cv2.threshold(gray, 240, 255, cv2.THRESH_BINARY)  # Detecta áreas brancas
+    _, white_mask = cv2.threshold(gray, 240, 255, cv2.THRESH_BINARY)
 
     # Se tivermos um quadro anterior, calcule a diferença entre eles
     if prev_frame is not None:
@@ -29,8 +30,7 @@ def processa_frame(img):
 
 def analisa_movimento(img, motion_mask):
     """
-    Analisa o movimento da cor branca baseado na máscara de movimento e desenha
-    um único retângulo envolvendo todas as áreas de movimento.
+    Analisa o movimento da cor branca baseado na máscara de movimento.
     """
     # Encontra os contornos das áreas de movimento
     contours, _ = cv2.findContours(motion_mask, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
@@ -41,22 +41,20 @@ def analisa_movimento(img, motion_mask):
     x_min, y_min, x_max, y_max = float('inf'), float('inf'), -float('inf'), -float('inf')
 
     for contour in contours:
-        # Ignora pequenos contornos (áreas pequenas)
+        # Ignora pequenos contornos
         if cv2.contourArea(contour) > 600:  # Ajuste o limite conforme necessário
             qt_movimento += 1
 
-            # Obtém as coordenadas do retângulo que envolve o contorno
+            # Busca as coordenadas do contorno
             x, y, w, h = cv2.boundingRect(contour)
-
-            # Atualiza as coordenadas mínima e máxima
             x_min = min(x_min, x)
             y_min = min(y_min, y)
             x_max = max(x_max, x + w)
             y_max = max(y_max, y + h)
 
-    # Desenha o único retângulo que envolve todas as áreas de movimento
+    # Desenha o retângulo nas áreas de movimento
     if qt_movimento > 0:
-        cv2.rectangle(img, (x_min, y_min), (x_max, y_max), (0, 255, 0), 2)  # Cor verde e espessura 2
+        cv2.rectangle(img, (x_min, y_min), (x_max, y_max), (0, 255, 0), 2)
 
     return qt_movimento
 
@@ -65,26 +63,28 @@ def exibe_status(img, qt_movimento, new_height):
     """
     Exibe o status da detecção de movimento, redimensionado proporcionalmente à altura do vídeo.
     """
-    # Calcula a posição e o tamanho da caixa de status de acordo com a altura do vídeo redimensionado
-    box_height = int(new_height * 0.1)  # Tamanho da caixa de status em 10% da altura do vídeo
-    box_width = int(img.shape[1] * 0.5)  # Largura da caixa em 50% da largura do vídeo
+    # Calcula o tamanho da caixa de status baseado na altura do vídeo redimensionado
+    box_height = int(new_height * 0.1)
+    box_width = int(img.shape[1] * 0.5)
 
     # Define as coordenadas da caixa de status
-    top_left = (int(img.shape[1] * 0.1), 0)  # Posição horizontal proporcional
-    bottom_right = (top_left[0] + box_width, box_height)  # Posição da parte inferior da caixa
+    top_left = (int(img.shape[1] * 0.1), 0)
+    bottom_right = (top_left[0] + box_width, box_height)
 
     # Desenha a caixa de status
     cv2.rectangle(img, top_left, bottom_right, (0, 0, 0), -1)
 
-    # Exibe o texto dentro da caixa
+    # Texto dentro da caixa
     cv2.putText(img, f'FIRE: {qt_movimento}', (top_left[0] + 10, top_left[1] + box_height - 10),
                 cv2.FONT_HERSHEY_DUPLEX, 1.5, (255, 255, 255), 5)
 
 
 def main():
-    namevideo = 'fire-cnc.mp4'
-    #namevideo = 'fire-cnc-1.mp4'
+    # Alterar conforme o vídeo que quer rodar
+    #namevideo = 'fire-cnc.mp4'
+    namevideo = 'fire-cnc-1.mp4'
     #namevideo = 'fire-cnc-2.mp4'
+    
     video_path = f'C:/Users/usuario/Desktop/Inteligencia Artificial/visao-comp-detecta-fogo/fire-detection/{namevideo}'
     video = cv2.VideoCapture(video_path)
 
@@ -92,18 +92,18 @@ def main():
         print(f"Erro ao abrir o vídeo: {video_path}")
         return
 
-    # Obtém a resolução original do vídeo
+    # Busca a resolução do vídeo
     original_width = int(video.get(cv2.CAP_PROP_FRAME_WIDTH))
     original_height = int(video.get(cv2.CAP_PROP_FRAME_HEIGHT))
 
-    # Define a altura desejada para o vídeo redimensionado
+    # Mude a a altura para redimensionar o vídeo
     new_height = 500
 
-    # Calcula a nova largura mantendo a proporção do vídeo original
+    # Calcula a nova largura
     aspect_ratio = original_width / original_height
     new_width = int(new_height * aspect_ratio)
 
-    paused = False  # Variável para controlar o estado de pausa
+    paused = False
 
     while True:
         if not paused:
@@ -117,21 +117,21 @@ def main():
             # Processa o frame para detectar o movimento da cor branca
             motion_mask, white_mask = processa_frame(resized_frame)
 
-            # Analisa o movimento
+            # Analisa movimento
             qt_movimento = analisa_movimento(resized_frame, motion_mask)
 
-            # Exibe o status do movimento detectado
+            # Mostra o status do movimento detectado
             exibe_status(resized_frame, qt_movimento, new_height)
 
-            # Exibe o vídeo redimensionado
+            # Mostra o vídeo redimensionado
             cv2.imshow('Video', resized_frame)
             
-            # Exibe a máscara de movimento
+            # Mostra a máscara de movimento
             cv2.namedWindow('Passo', cv2.WINDOW_NORMAL)
             cv2.resizeWindow('Passo', 180, 320)
             cv2.imshow('Passo', motion_mask)
 
-            # Exibe a área branca isolada
+            # Mostra a área branca isolada
             cv2.namedWindow('Area Branca', cv2.WINDOW_NORMAL)
             cv2.resizeWindow('Area Branca', 178, 292)
             cv2.imshow('Area Branca', white_mask)

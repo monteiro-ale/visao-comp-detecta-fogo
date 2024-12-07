@@ -1,7 +1,11 @@
 # Projeto de Visão Computacional
-Protótipo de projeto para detectar fogo em máquinas de corte a laser.
+Projeto para detectar fogo em máquinas de corte a laser - Protótipo inicial.
 
-Este projeto utiliza técnicas de visão computacional para detectar áreas brancas em movimento, como possíveis indícios de fogo, em vídeos de máquinas de corte a laser. O código é escrito em Python e depende de bibliotecas como OpenCV e NumPy.
+Este projeto utiliza técnicas de visão computacional para detectar chamas e previnir incêndios em máquinas de corte a Laser.
+No diretório **fire-detection** são analisadas as áreas brancas em movimento, como possíveis indícios de fogo, em vídeos com estas máquinas. O código é escrito em Python e depende de bibliotecas como OpenCV e NumPy.
+
+Junto a isto, também subi na pasta **fire-det-webcam** um código para identificar chamas pela webcam, caso não tenha uma webcam disponível, é possível utilizar seu smartphone com aplicativos como o DroidCam ou outras ferramentas similares.
+Este código depende do arquivo fire_detection_cascade_model.xml, que contém classificadores em cascata treinados para detectar chamas em tempo real.
 
 ---
 
@@ -71,16 +75,17 @@ Máscara de Movimento: Realça áreas brancas em movimento.
 #### A estrutura do projeto é organizada como segue:
 ```bash
 C:.
-│   .gitignore
-│   README.md
-│   requirements.txt
+├───fire-det-webcam
+│       fire-det-webcam.py
+│       fire_detection_cascade_model.xml
 │
 └───fire-detection
+        fire-cnc-1.mp4
+        fire-cnc-2.mp4
+        fire-cnc.mp4
         main.py
         README.md
         roi.py
-        videoplayback.webm
-        videoplayback2.mp4
 ```
 
 ## 📝 Notas Importantes

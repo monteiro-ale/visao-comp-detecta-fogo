@@ -1,4 +1,4 @@
-# Visão Computacional para Monitoramento de Vagas de Estacionamento
+# Visão Computacional - Selecionando o ROI
 
 
 2. **Executando o script `roi.py`:**

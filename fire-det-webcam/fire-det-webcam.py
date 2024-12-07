@@ -1,40 +1,41 @@
-import cv2  # Library for openCV
+import cv2 
 
-# To access xml file which includes positive and negative images of fire
+# Busca classificadores do XML treinado
 fire_cascade = cv2.CascadeClassifier('fire_detection_cascade_model.xml')
 
-# Start camera (use 0 for inbuilt or 1 for external USB camera)
+# Start da camera
 vid = cv2.VideoCapture(0) 
 
-# Uncomment to use a video file instead
-# vid = cv2.VideoCapture("videos\\fire2.mp4")
+# Teste com vídeo
+# vid = cv2.VideoCapture("fire-detection\\fire-cnc-1")
 
 while True:
-    # Value in ret is True, ret = success of reading frame
+    # ret será True se a leitura do frame for bem-sucedida
     ret, frame = vid.read() 
     if not ret:
-        print("Failed to grab frame. Exiting...")
+        print("Falha ao capturar o frame. Saindo...")
         break
 
-    # Convert frame to grayscale
+    # Converte para escala de cinza
     gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY) 
 
-    # Detect fire in the frame
+    # Detecta fogo no frame
     fire = fire_cascade.detectMultiScale(frame, 1.2, 5) 
 
-    # Highlight detected fire with rectangles
+    # Destaca o fogo detectado no video
     for (x, y, w, h) in fire:
         cv2.rectangle(frame, (x-20, y-20), (x+w+20, y+h+20), (255, 0, 0), 2)
-        print("Fire detected!")
+        print("Fogo detectado!")
 
-    # Show the frame with rectangles
-    cv2.imshow('Fire Detection', frame)
+    # Exibe o frame com os retângulos
+    cv2.imshow('Detecção de Fogo', frame)
 
-    # Exit on pressing 'q'
+    # Sai ao pressionar 'q'
     if cv2.waitKey(1) & 0xFF == ord('q'):
         break
 
-# Release the video capture and close the display window
+# Libera a captura de vídeo e fecha a janela de exibição
 vid.release()
 cv2.destroyAllWindows()
+
 #python fire-det-webcam.py
