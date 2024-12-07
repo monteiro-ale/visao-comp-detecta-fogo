@@ -9,14 +9,14 @@ Este projeto utiliza técnicas de visão computacional para detectar áreas bran
 
 ### Pré-requisitos
 1. **Python instalado**:
-   - Certifique-se de ter o Python 3.10+ instalado em sua máquina.
-   - Verifique com:
+    Certifique-se de ter o Python 3.10+ instalado em sua máquina.
+    Verifique com:
      ```bash
      python --version
      ```
 
 2. **Ambiente virtual**:
-   - É recomendável usar um ambiente virtual para isolar as dependências do projeto.
+    É recomendável usar um ambiente virtual para isolar as dependências do projeto.
 
 ---
 
@@ -101,5 +101,5 @@ Pequenos contornos são ignorados por padrão (áreas menores que 500 pixels). C
 
 ```python
 if cv2.contourArea(contour) > 500:
-	```
+```
 A velocidade de reprodução do vídeo pode ser ajustada modificando o valor de cv2.waitKey() no laço principal do código.
