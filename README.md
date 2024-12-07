@@ -51,7 +51,7 @@ pip install -r requirements.txt
 
 ## 🚀 Execução do Projeto
 
-#### Para executar o reconhecimento de fogo no vídeo:
+#### Para executar o reconhecimento de fogo no vídeo (Folder: fire-detection):
 
 ```bash
 python main.py
@@ -69,6 +69,17 @@ Máscaras e Visualizações
 Janela Principal: Exibe o vídeo original com a detecção de movimento.
 Máscara de Movimento: Realça áreas brancas em movimento.
 Área Branca: Destaca as áreas brancas identificadas no quadro atual.
+
+
+#### Para executar o reconhecimento de fogo na Webcam (Folder: fire-det-webcam):
+
+```bash
+python fire-det-webcam.py
+```
+
+## Resultado esperado:
+![Detect-fire-expected](https://drive.google.com/uc?export=view&id=1ENzP5-fv77EsBCkKocTrO4GZvGhGXtVI)
+
 
 ## 📁 Estrutura do Projeto
 
